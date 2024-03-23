@@ -4,6 +4,7 @@ import io
 import os
 
 
+
 def greet():
 
     c_time = int(datetime.strftime(datetime.now(), "%H"))
@@ -21,6 +22,30 @@ def greet():
 
     
 
+def write_to_file(file_path, task_list):
+    file = open(file_path, "r+")
+
+    for task in task_list:
+        file.seek(0, 2)
+        file.write(f"\n{task}")
+        file.flush()
+
+    file.close()
+
+
+
+
+def read_print_file(file_path):
+    file = open(file_path, "r+")
+
+    lines = file.readlines()
+    print(f"Number of tasks: {len(lines)}")
+
+    print(*lines, sep="")
+
+    file.close()
+
+
 
 
 def main():
@@ -29,29 +54,24 @@ def main():
     file_name = f"daily_tasks_list_{day_for_log}.txt"
     file_dir = os.path.join(os.path.expanduser("~") , "OneDrive", "Desktop", "Messing Around", "Python", "Daily tasks tracker")
     complete_path = os.path.join(file_dir, file_name)
-    print(complete_path)
 
     greet()
 
+
+
     def task_handler(file_path):
-        file = open(file_path, "r+")
-            
+        task_list = []
         while True:
             print("To stop adding tasks type 'stop' ")
             task = input("Name the task you would like to add: ")
             if task == "stop":
                 break
-            file.seek(0, 2)
-            file.write(f"\n{task}")
-            file.flush()
+            task_list.append(task)
 
-        file.seek(0, 0)
-        lines = file.readlines()
-        print(f"Number of tasks: {len(lines)}")
+        write_to_file(file_path, task_list)
+        read_print_file(file_path)
 
-        print(*lines, sep="")
 
-        file.close()
 
     options1 = ["1","2","new","existing"]
 
