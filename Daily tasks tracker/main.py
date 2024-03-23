@@ -48,9 +48,6 @@ def main():
 
         print(*lines, sep="")
 
-        for i in range(len(lines)):
-            print(lines[i])
-
         file.close()
 
     options1 = ["1","2","new","existing"]
