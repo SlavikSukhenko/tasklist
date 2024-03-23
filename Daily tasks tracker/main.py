@@ -23,29 +23,54 @@ def greet():
     
 
 def write_to_file(file_path, task_list):
-    file = open(file_path, "r+")
 
-    for task in task_list:
-        file.seek(0, 2)
-        file.write(f"\n{task}")
-        file.flush()
-
-    file.close()
-
+    with open(file_path, "r+") as file:
+        for task in task_list:
+            file.seek(0, 2)
+            file.write(f"\n{task}")
+            file.flush()
+        file.close()
 
 
 
-def read_print_file(file_path):
-    file = open(file_path, "r+")
 
-    lines = file.readlines()
-    print(f"Number of tasks: {len(lines)}")
+def read_print_checkoff_file(file_path):
+    with open(file_path, "r") as file:
 
-    print(*lines, sep="")
+        lines = file.readlines()
+        print(f"Number of tasks: {len(lines)}")
 
-    file.close()
+        print(*lines, sep="")
+        
+        file.close()
 
+    while True:
+        print("To stop checking off tasks, type 'stop'")
+        task = input("Please enter the name of the task you would like to check off: ")
 
+        if task == "stop":
+            break
+
+        while not task in lines:
+            print("Please input a valid task")
+            task = input("Please enter the name of the task you would like to check off: ")
+
+        lines.remove(task)
+
+        with open(file_path, "w+") as file:
+            for task in lines:
+                file.seek(0, 2)
+                file.write(f"\n{task}")
+                file.flush()
+            
+            print("Updated version:\n")
+            print(f"Number of tasks: {len(lines)}")
+
+            print(*lines, sep="")
+
+            file.close()
+        
+    
 
 
 def main():
@@ -69,7 +94,7 @@ def main():
             task_list.append(task)
 
         write_to_file(file_path, task_list)
-        read_print_file(file_path)
+        read_print_checkoff_file(file_path)
 
 
 
