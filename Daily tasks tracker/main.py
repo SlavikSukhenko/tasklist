@@ -41,8 +41,11 @@ def main():
             task = input("Name the task you would like to add: ")
             if task == "stop":
                 break
+            file.seek(0, 2)
             file.write(f"\n{task}")
+            file.flush()
 
+        file.seek(0, 0)
         lines = file.readlines()
         print(f"Number of tasks: {len(lines)}")
 
