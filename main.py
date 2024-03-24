@@ -20,15 +20,19 @@ def greet():
         print("Good Evening!")
 
 
-    
-
 def write_to_file(file_path, task_list):
 
-    with open(file_path, "r+") as file:
+    with open(file_path, "w+") as file:
         for task in task_list:
-            file.seek(0, 2)
-            file.write(f"\n{task}")
-            file.flush()
+            file.write(f"{task}\n")
+        file.close()
+
+def append_to_file(file_path, task_list):
+
+    with open(file_path, "r+") as file:
+        file.seek(0, 2)
+        for task in task_list:
+            file.write(f"{task}\n")
         file.close()
 
 
@@ -37,16 +41,18 @@ def write_to_file(file_path, task_list):
 def read_print_checkoff_file(file_path):
     with open(file_path, "r") as file:
 
-        lines = file.readlines()
+        lines = list(map(lambda line: line.strip(), file.readlines()))
+            
         print(f"Number of tasks: {len(lines)}")
 
-        print(*lines, sep="")
+        print(*lines, sep="\n")
         
         file.close()
 
     while True:
         print("To stop checking off tasks, type 'stop'")
         task = input("Please enter the name of the task you would like to check off: ")
+
 
         if task == "stop":
             break
@@ -57,18 +63,13 @@ def read_print_checkoff_file(file_path):
 
         lines.remove(task)
 
-        with open(file_path, "w+") as file:
-            for task in lines:
-                file.seek(0, 2)
-                file.write(f"\n{task}")
-                file.flush()
+        write_to_file(file_path, lines)
             
-            print("Updated version:\n")
-            print(f"Number of tasks: {len(lines)}")
+        print("Updated version:\n")
+        print(f"Number of tasks: {len(lines)}")
 
-            print(*lines, sep="")
+        print(*lines, sep="\n")
 
-            file.close()
         
     
 
@@ -93,7 +94,7 @@ def main():
                 break
             task_list.append(task)
 
-        write_to_file(file_path, task_list)
+        append_to_file(file_path, task_list)
         read_print_checkoff_file(file_path)
 
 
