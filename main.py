@@ -77,7 +77,7 @@ def main():
     day_for_log = datetime.now().strftime("%m_%d_%Y")
     
     file_name = f"daily_tasks_list_{day_for_log}.txt"
-    file_dir = os.path.join(os.path.expanduser("~") , "OneDrive", "Desktop", "Messing Around", "Python", "Daily tasks tracker")
+    file_dir = os.getcwd()
     complete_path = os.path.join(file_dir, file_name)
 
     greet()
