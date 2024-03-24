@@ -113,20 +113,25 @@ def main():
 
     if u_choice == "1" or u_choice == "new":
 
+
         if os.path.exists(complete_path):
             options2 = ["1", "2", "continue", "no"]
             u_choice = input("You already have a log from today, would you like to continue with this one or no. (1/2): ")
+
 
             while not u_choice in options2:
                 print("Please enter a valid input.")
                 u_choice = input("You already have a log from today, would you like to continue with this one or no. (1/2): ")
 
+
             if u_choice == "1" or u_choice == "continue":
                     task_handler(complete_path)
+
             else:
                 os.remove(complete_path)
-                with io.open(complete_path, "a+") as file:
-                    file.write("Testing2")
+                task_handler(complete_path)
+
+
         elif len(os.listdir(file_dir)) > 1:
             print("There are old logs in the current directory.")
             options3 = ["1", "2", "3", "4", "5"]
@@ -145,9 +150,11 @@ def main():
 
                 elif u_choice == "2":
                     delete_file = input("Please enter the name of the file you want to delete: ")
+
                     while not delete_file in os.listdir(file_dir):
                         print("Please enter a valid input.")
                         delete_file = input("Please enter the name of the file you want to delete: ")
+
                     os.remove(os.path.join(file_dir, delete_file))
                 
                 elif u_choice == "3":
@@ -157,14 +164,12 @@ def main():
                         os.remove(os.path.join(file_dir, file))
 
                 elif u_choice == "4":
-                    with io.open(complete_path, "a+") as file:
-                        file.write("testttttt")
+                    task_handler(complete_path)
 
                 else:
                     exit()
         else:
-            with io.open(complete_path, "a+") as file:
-                file.write("Testing1")
+            task_handler(complete_path)
 
     else:
         open_file_date = input("Please enter the date of the file you want to open (xx/xx/xxxx): ").split("/")
@@ -175,8 +180,7 @@ def main():
 
         open_file_name = f"daily_tasks_list_{open_file_date[0]}_{open_file_date[1]}_{open_file_date[2]}.txt"
         complete_open_file_name = os.path.join(file_dir, open_file_name)
-        print(complete_open_file_name)
+
         if os.path.exists(complete_open_file_name):
-            with io.open(complete_open_file_name, "a") as file:
-                file.write("Testing4")
+            task_handler(complete_open_file_name)
 main()
