@@ -8,9 +8,7 @@ added 8
 hi
 hello
 hola
-test 1
 test 2
 test 3
-test 5
 ifjweoijf
 foiewj

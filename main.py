@@ -53,13 +53,17 @@ def read_print_checkoff_file(file_path):
         print("To stop checking off tasks, type 'stop'")
         task = input("Please enter the name of the task you would like to check off: ")
 
-
         if task == "stop":
             break
 
         while not task in lines:
             print("Please input a valid task")
             task = input("Please enter the name of the task you would like to check off: ")
+            if task == "stop":
+                break
+
+        if task == "stop":
+            break
 
         lines.remove(task)
 
